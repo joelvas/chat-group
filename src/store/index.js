@@ -8,8 +8,8 @@ const store = createStore({
       isAuthenticated: false,
       user: {},
       token: "",
-      baseUrl: 'http://localhost:8080',
-      //baseUrl: 'https://my-simplechat.herokuapp.com',
+      //baseUrl: 'http://localhost:8080',
+      baseUrl: 'https://my-chat-group.herokuapp.com/',
       channelsList: [],
       currentChannel: {
         _id: 0,
