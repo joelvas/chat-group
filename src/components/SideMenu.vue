@@ -1,17 +1,29 @@
 <script setup>
 import { ref } from '@vue/reactivity'
-import { useCssModule } from '@vue/runtime-dom'
+import { computed, useCssModule } from '@vue/runtime-dom'
 import ChannelsPanel from './ChannelsPanel.vue'
 import MembersPanel from './MembersPanel.vue'
 import NewChannel from '../components/NewChannel.vue'
 import SideMenuFooter from '../components/SideMenuFooter.vue'
 import ModalDialog from '../components/Util/ModalDialog.vue'
+import SpinnerLoader from '../components/Util/SpinnerLoader.vue'
+import { useStore } from 'vuex'
+
 const style = useCssModule()
+const store = useStore()
+const emit = defineEmits(['toggleSideMenu'])
+const props = defineProps(['sideMenu'])
+
 const channelsPanel = ref(true)
 const expandOptions = ref(false)
 const newChannel = ref(false)
-const emit = defineEmits(['toggleSideMenu'])
-const props = defineProps(['sideMenu'])
+
+const hasChannels = computed(() => {
+	return store.state.channelsList.length > 0 ? true : false
+})
+const hasMembers = computed(() => {
+	return store.state.currentMembers.length > 0 ? true : false
+})
 </script>
 
 <template>
@@ -45,12 +57,15 @@ const props = defineProps(['sideMenu'])
 		<modal-dialog :new-channel="newChannel" @closeModal="newChannel = false">
 			<new-channel @closeModal="newChannel = false" />
 		</modal-dialog>
+		<spinner-loader
+			v-if="(!hasChannels && channelsPanel) || (!hasMembers && !channelsPanel)"
+		/>
 		<channels-panel
-			v-if="channelsPanel"
+			v-if="channelsPanel && hasChannels"
 			key="channels"
 			@goToMembers="channelsPanel = false"
 		/>
-		<members-panel v-else key="members" />
+		<members-panel v-if="!channelsPanel && hasMembers" key="members" />
 		<side-menu-footer />
 	</aside>
 </template>

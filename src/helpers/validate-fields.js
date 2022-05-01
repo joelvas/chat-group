@@ -13,6 +13,9 @@ const email = (email) => {
 const passwords = (password1, password2) => {
   return password1 === password2 ? true : false
 }
+const phone = (phone)=>{
+  
+}
 export default {
   email,
   passwords

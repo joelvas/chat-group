@@ -20,6 +20,9 @@ const store = createStore({
     }
   },
   mutations: {
+    setUser(state, user) {
+      state.user = user
+    },
     setCredentials(state, { token, user }) {
       state.isAuthenticated = true
       state.user = user
@@ -109,7 +112,12 @@ const store = createStore({
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       router.push({ name: 'login' })
+    },
+    async updateUser({ commit }, payload) {
+      commit('setUser', payload)
+      localStorage.setItem('user', JSON.stringify(payload))
     }
+
   }
 })
 

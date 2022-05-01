@@ -49,15 +49,15 @@ const validateFields = () => {
 		</div>
 		<label :class="style.inputLabel">
 			<span class="material-icons">person</span>
-			<input type="text" v-model="name" placeholder="name" />
+			<input type="text" v-model="name" placeholder="Enter your name" />
 		</label>
 		<label :class="style.inputLabel">
 			<span class="material-icons">email</span>
-			<input type="text" v-model="email" placeholder="email" />
+			<input type="text" v-model="email" placeholder="Enter your email" />
 		</label>
 		<label :class="style.inputLabel">
 			<span class="material-icons">lock</span>
-			<input type="password" v-model="password" placeholder="password" />
+			<input type="password" v-model="password" placeholder="Enter a password" />
 		</label>
 		<label :class="style.inputLabel">
 			<span class="material-icons">lock</span>
@@ -65,7 +65,7 @@ const validateFields = () => {
 				type="password"
 				v-model="password2"
 				@keyup.enter="handleRegister"
-				placeholder="repit password"
+				placeholder="Repeat the password"
 			/>
 		</label>
 		<button type="button" @click="handleRegister" :class="style.submitButton">

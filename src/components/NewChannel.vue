@@ -16,8 +16,12 @@ const handleNewRoom = () => {
 		console.log(JSON.stringify(errors))
 		return false
 	}
+	store.commit('setCurrentMembers', [])
+	store.commit('setCurrentMessages', [])
+
 	const channel = { name: name.value, description: description.value }
 	socket.emit('create-channel', channel, (payload) => {
+		socket.emit('join-channel', payload)
 		store.commit('setCurrentChannel', payload)
 		name.value = ''
 		description.value = ''
@@ -37,12 +41,12 @@ const validateFields = () => {
 <template>
 	<div :class="style.newChannelForm">
 		<span>NEW CHANNEL</span>
-		<input type="text" v-model="name" placeholder="channel name" />
+		<input type="text" v-model="name" placeholder="Enter a name" />
 		<textarea
 			v-model="description"
 			cols="30"
 			rows="5"
-			placeholder="channel description"
+			placeholder="Enter a description"
 			@keydown.enter="handleNewRoom"
 		></textarea>
 		<div>

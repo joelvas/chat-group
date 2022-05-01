@@ -10,11 +10,11 @@ const channels = computed(() => store.state.channelsList)
 const emit = defineEmits(['goToMembers'])
 
 const handleGoChannel = (channel) => {
-	socket.emit('join-channel', channel, (payload) => {
-		store.commit('setCurrentMembers', payload)
-	})
-	store.commit('setCurrentChannel', channel)
 	emit('goToMembers')
+	socket.emit('join-channel', channel)
+	store.commit('setCurrentMembers', [])
+	store.commit('setCurrentMessages', [])
+	store.commit('setCurrentChannel', channel)
 }
 const getAbrev = (name) => {
 	const abrev = name

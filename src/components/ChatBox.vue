@@ -2,12 +2,17 @@
 import { computed, useCssModule } from '@vue/runtime-dom'
 import ChatBoxHistory from '../components/ChatBoxHistory.vue'
 import ChatBoxEntry from '../components/ChatBoxEntry.vue'
+import SpinnerLoader from '../components/Util/SpinnerLoader.vue'
+
 import { useStore } from 'vuex'
 const style = useCssModule()
 const store = useStore()
 const currentChannel = computed(() => store.state.currentChannel)
 const props = defineProps(['sideMenu'])
 const emit = defineEmits(['toggleSideMenu'])
+const hasMessages = computed(() => {
+	return store.state.currentMessages.length > 0 ? true : false
+})
 </script>
 
 <template>
@@ -33,7 +38,8 @@ const emit = defineEmits(['toggleSideMenu'])
 				{{ currentChannel.name.toUpperCase() }}
 			</span>
 		</nav>
-		<chat-box-history />
+		<chat-box-history v-if="hasMessages" />
+		<spinner-loader v-if="!hasMessages" />
 		<chat-box-entry />
 	</section>
 </template>

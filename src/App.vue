@@ -1,4 +1,5 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
 	<router-view v-slot="{ Component }">
@@ -14,7 +15,7 @@ body {
 	text-align: center;
 	font-size: 0.9rem;
 	color: var(--primary-text-color);
-  background: var(--secondary-bg-color);
+	background: var(--secondary-bg-color);
 	margin: 0;
 }
 :root {

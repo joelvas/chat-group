@@ -26,7 +26,7 @@ const firstToUpperCase = (text) => {
 		<p :class="style.channelDescription">
 			{{ store.state.currentChannel.description }}
 		</p>
-		<div>MEMBERS</div>
+		<div>ACTIVE MEMBERS</div>
 		<ul :class="style.membersList">
 			<li v-for="(member, i) in members" :key="i">
 				<span class="material-icons">account_circle</span>

@@ -38,7 +38,7 @@ const validateFields = () => {
 		<div :class="style.title">Login</div>
 		<label :class="style.inputLabel">
 			<span class="material-icons">email</span>
-			<input type="text" v-model="email" placeholder="email" />
+			<input type="text" v-model="email" placeholder="Enter your email" />
 		</label>
 		<label :class="style.inputLabel">
 			<span class="material-icons">lock</span>
@@ -46,7 +46,7 @@ const validateFields = () => {
 				type="password"
 				@keyup.enter="handleLogin"
 				v-model="password"
-				placeholder="password"
+				placeholder="Enter your password"
 			/>
 		</label>
 		<button type="button" :class="style.submitButton" @click="handleLogin">
