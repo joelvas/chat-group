@@ -76,6 +76,8 @@ const hasMembers = computed(() => {
 	height: calc(100vh);
 	display: flex;
 	flex-flow: column;
+  position: relative;
+  z-index: 1;
 }
 .channelsNavbar {
 	display: flex;

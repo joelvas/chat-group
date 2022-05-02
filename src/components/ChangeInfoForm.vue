@@ -1,11 +1,16 @@
 <script setup>
 import { computed, useCssModule } from '@vue/runtime-dom'
+import ImageUploader from '../components/Util/ImageUploader.vue'
 import { useStore } from 'vuex'
 
 const style = useCssModule()
 const store = useStore()
 const emit = defineEmits(['updateInfo'])
 const profile = computed(() => store.state.user)
+let image = new FormData()
+const handleImage = () => {
+	image.append()
+}
 const handleForm = (event) => {
 	const { name, bio, phone } = event.target.elements
 	const data = {
@@ -15,7 +20,10 @@ const handleForm = (event) => {
 	}
 	const errors = validateFields(data)
 	if (errors.length > 0) console.log(JSON.stringify(errors))
-	else emit('updateInfo', data)
+	else {
+		emit('updateInfo', data)
+		emit('updateImage', image)
+	}
 }
 const validateFields = (data) => {
 	let errors = []
@@ -33,9 +41,7 @@ const validateFields = (data) => {
 	>
 		<span>Change Info</span>
 		<span>Changes will be reflected to every services</span>
-		<div>
-			<img src="" alt="foto" />
-		</div>
+		<image-uploader @handleImage="handleImage" />
 		<label>
 			Name
 			<input

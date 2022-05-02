@@ -1,7 +1,7 @@
 <script setup>
 import SideMenu from '../components/SideMenu.vue'
 import ChatBox from '../components/ChatBox.vue'
-import { provide, ref, useCssModule } from '@vue/runtime-dom'
+import { onUnmounted, provide, ref, useCssModule } from '@vue/runtime-dom'
 import { io } from 'socket.io-client'
 import { useStore } from 'vuex'
 
@@ -11,41 +11,51 @@ const sideMenu = ref(true)
 
 document.title = 'Home | Chat Group'
 
+//initializing socket
 const socket = io(store.state.baseUrl, {
 	extraHeaders: { 'x-token': store.state.token },
 })
 provide('socket', socket)
 
+//sockets started
 socket.on('channels-list', (payload) => {
 	store.commit('setChannelsList', payload)
-})
-socket.on('current-members', (payload) => {
-	store.commit('setCurrentMembers', payload)
 })
 socket.on('current-channel', (payload) => {
 	store.commit('setCurrentChannel', payload)
 })
-socket.on('new-member', (payload) => {
-	store.commit('addMember', payload)
+socket.on('current-members', (payload) => {
+	store.commit('setCurrentMembers', payload)
 })
 socket.on('current-messages', (payload) => {
 	store.commit('setCurrentMessages', payload)
 })
-socket.on('new-message', (payload) => {
-	store.commit('addMessage', payload)
-})
+
+//sockets updates
 socket.on('new-channel', (payload) => {
 	store.commit('addChannel', payload)
+})
+socket.on('new-member', (payload) => {
+	store.commit('addMember', payload)
 })
 socket.on('remove-member', (payload) => {
 	store.commit('removeMember', payload)
 })
+socket.on('new-message', (payload) => {
+	store.commit('addMessage', payload)
+})
+
 socket.on('connect', () => {
 	console.log('Socket connected')
 })
 socket.on('disconnect', () => {
 	console.log('Socket disconnected')
 })
+
+onUnmounted(() => {
+	socket.disconnect()
+})
+
 let touchStart
 document.addEventListener('touchstart', (e) => {
 	const { clientX, clientY } = e.targetTouches[0]

@@ -11,6 +11,7 @@ const emit = defineEmits(['goToMembers'])
 
 const handleGoChannel = (channel) => {
 	emit('goToMembers')
+	if (channel._id === store.state.currentChannel._id) return false
 	socket.emit('join-channel', channel)
 	store.commit('setCurrentMembers', [])
 	store.commit('setCurrentMessages', [])

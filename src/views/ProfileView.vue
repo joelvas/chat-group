@@ -15,7 +15,6 @@ const profileInfo = ref(true)
 const headers = {
 	'x-token': store.state.token,
 }
-
 const updateInfo = async (data) => {
 	const res = await axios
 		.put(store.state.baseUrl + '/api/users/' + store.state.user._id, data, {
@@ -29,21 +28,26 @@ const updateInfo = async (data) => {
 		profileInfo.value = true
 	}
 }
+const updateImage = async (image) => {
+  
+}
 </script>
 <template>
 	<navigation-bar />
-	<div :class="style.backButtonContainer" v-if="!profileInfo">
-		<button @click="profileInfo = true">
-			<span class="material-icons"> chevron_left </span>
-			Back
-		</button>
-	</div>
-	<profile-info v-if="profileInfo" @openEditPanel="profileInfo = false" />
-	<change-info-form
-		v-else
-		@updateInfo="updateInfo"
-		@openInfoPanel="profileInfo = true"
-	/>
+	<main :class="style.mainContainer">
+		<div :class="style.backButtonContainer" v-if="!profileInfo">
+			<button @click="profileInfo = true">
+				<span class="material-icons"> chevron_left </span>
+				Back
+			</button>
+		</div>
+		<profile-info v-if="profileInfo" @openEditPanel="profileInfo = false" />
+		<change-info-form
+			v-else
+			@updateInfo="updateInfo"
+			@openInfoPanel="profileInfo = true"
+		/>
+	</main>
 </template>
 
 <style module>
@@ -57,5 +61,11 @@ const updateInfo = async (data) => {
 	background: inherit;
 	color: var(--blue-dark);
 	border: none;
+}
+.mainContainer {
+	max-width: 50rem;
+	margin: auto;
+	display: flex;
+	flex-flow: column;
 }
 </style>

@@ -16,7 +16,14 @@ const store = createStore({
         name: 'Chat Group',
       },
       currentMembers: [],
-      currentMessages: [],
+      currentMessages: [{
+        _id: 0,
+        text: 'Join a current channel or start one',
+        created_at: String(Date.now()),
+        user: {
+          name: 'Browser'
+        }
+      }],
     }
   },
   mutations: {

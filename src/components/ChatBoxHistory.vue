@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, useCssModule } from '@vue/runtime-dom'
+import { computed, onUpdated, ref, useCssModule } from '@vue/runtime-dom'
 import { useStore } from 'vuex'
 const style = useCssModule()
 const store = useStore()
@@ -12,10 +12,22 @@ const milisecToString = (date) => {
 		newDate.substring(4, 10) + ' at ' + newDate.substring(16, 21) + ' ' + moment
 	return string
 }
+const scrollToBottom = (query, smooth) => {
+	const element = document.querySelector(query)
+	if (smooth) {
+		element.style.scrollBehavior = 'smooth'
+	} else {
+		element.style.scrollBehavior = 'initial'
+	}
+	element.scrollTop = element.scrollHeight
+}
+onUpdated(()=>{
+  scrollToBottom('#chatboxHistory', true)
+})
 </script>
 
 <template>
-	<ul :class="style.chatboxHistory">
+	<ul :class="style.chatboxHistory" id="chatboxHistory">
 		<li v-for="(msg, i) in msgs" :key="i">
 			<span :class="style.msgIcon" class="material-icons">
 				account_circle
