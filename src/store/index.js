@@ -7,10 +7,13 @@ const store = createStore({
     return {
       isAuthenticated: false,
       user: {},
-      token: "",
-      //baseUrl: 'http://localhost:8080',
-      baseUrl: 'https://my-chat-group.herokuapp.com',
+      token: '',
+      defaultProfileImg: '',
+      baseUrl: 'http://localhost:8080',
+      //baseUrl: 'https://my-chat-group.herokuapp.com',
       channelsList: [],
+      isLoadingChannels: true,
+      isLoadingMembers: true,
       currentChannel: {
         _id: 0,
         name: 'Chat Group',
@@ -30,6 +33,9 @@ const store = createStore({
     setUser(state, user) {
       state.user = user
     },
+    setDefaultProfileImg(state, imgUrl) {
+      state.defaultProfileImg = imgUrl
+    },
     setCredentials(state, { token, user }) {
       state.isAuthenticated = true
       state.user = user
@@ -42,12 +48,15 @@ const store = createStore({
     },
     setCurrentChannel(state, channel) {
       state.currentChannel = channel
+      state.isLoadingMembers = true
     },
     setChannelsList(state, channels) {
       state.channelsList = channels
+      state.isLoadingChannels = false
     },
     setCurrentMembers(state, members) {
       state.currentMembers = members
+      state.isLoadingMembers = false
     },
     addChannel(state, channel) {
       state.channelsList = [...state.channelsList, channel]

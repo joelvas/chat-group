@@ -6,6 +6,7 @@ const style = useCssModule()
 const store = useStore()
 const emit = defineEmits(['openEditPanel'])
 const profile = computed(() => store.state.user)
+const defaultProfileImg = computed(() => store.state.defaultProfileImg)
 const customDate = (date) => {
 	const custom = new Date(Number(date)).toString()
 	return custom.substring(4, 15)
@@ -29,8 +30,17 @@ const handleEditButton = () => {
 			</div>
 			<div>
 				<span>PHOTO</span>
-				<img v-if="profile.img" :src="profile.img" :alt="profile.name" />
-				<span v-else class="material-icons">account_circle</span>
+				<img
+					:class="style.profileImage"
+					v-if="!profile.img"
+					:src="defaultProfileImg"
+				/>
+				<img
+					:class="style.profileImage"
+					v-if="profile.img"
+					:src="profile.img"
+					:alt="profile.name"
+				/>
 			</div>
 			<div>
 				<span>NAME</span>
@@ -76,6 +86,10 @@ const handleEditButton = () => {
 }
 .profileInfo > div:last-child {
 	border: none;
+}
+
+.profileImage {
+	width: 2.5rem;
 }
 
 .profileEdit > div:nth-child(1) {

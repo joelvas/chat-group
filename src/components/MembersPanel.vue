@@ -6,6 +6,11 @@ import { useStore } from 'vuex'
 const style = useCssModule()
 const store = useStore()
 const members = computed(() => store.state.currentMembers)
+const getRandomProfileImg = (name) => {
+	return (
+		'https://ui-avatars.com/api/?background=random&name=' + name.split(' ')[0]
+	)
+}
 
 const firstToUpperCase = (text) => {
 	return text
@@ -29,8 +34,10 @@ const firstToUpperCase = (text) => {
 		<div>ACTIVE MEMBERS</div>
 		<ul :class="style.membersList">
 			<li v-for="(member, i) in members" :key="i">
-				<span class="material-icons">account_circle</span>
-				<!--<img src="" alt="" v-if="member.img" />-->
+				<img
+					:src="member.img ? member.img : getRandomProfileImg(member.name)"
+					alt=""
+				/>
 				<span>{{ firstToUpperCase(member.name) }}</span>
 			</li>
 		</ul>
@@ -85,11 +92,9 @@ const firstToUpperCase = (text) => {
 	color: var(--secondary-text-color);
 	gap: 0.5rem;
 }
-.membersList li span:nth-child(1) {
-	width: 1.5rem;
-	height: 1.5rem;
+.membersList li img:nth-child(1) {
+	width: 2rem;
 	background: var(--primary-bg-color);
-	padding: 0.3rem;
 	display: flex;
 	border-radius: 10px;
 	justify-content: center;

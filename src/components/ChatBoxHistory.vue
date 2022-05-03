@@ -4,7 +4,11 @@ import { useStore } from 'vuex'
 const style = useCssModule()
 const store = useStore()
 const msgs = computed(() => store.state.currentMessages)
-
+const getRandomProfileImg = (name) => {
+	return (
+		'https://ui-avatars.com/api/?background=random&name=' + name.split(' ')[0]
+	)
+}
 const milisecToString = (date) => {
 	const newDate = new Date(Number(date)).toString()
 	const moment = newDate.substring(16, 18) > 11 ? 'PM' : 'AM'
@@ -21,24 +25,20 @@ const scrollToBottom = (query, smooth) => {
 	}
 	element.scrollTop = element.scrollHeight
 }
-onUpdated(()=>{
-  scrollToBottom('#chatboxHistory', true)
+onUpdated(() => {
+	scrollToBottom('#chatboxHistory', true)
 })
 </script>
 
 <template>
 	<ul :class="style.chatboxHistory" id="chatboxHistory">
 		<li v-for="(msg, i) in msgs" :key="i">
-			<span :class="style.msgIcon" class="material-icons">
-				account_circle
-			</span>
-			<!--<img
-				:src="msg.user.img"
+			<img
+				:src="msg.user.img ? msg.user.img : getRandomProfileImg(msg.user.name)"
 				:class="style.msgImage"
-				v-else
 				width="20"
 				alt="user_img"
-			/>-->
+			/>
 			<div :class="style.msgContent">
 				<div :class="style.msgInfo">
 					<span v-if="msg.user.name === store.state.user.name">You</span>

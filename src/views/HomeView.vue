@@ -16,7 +16,6 @@ const socket = io(store.state.baseUrl, {
 	extraHeaders: { 'x-token': store.state.token },
 })
 provide('socket', socket)
-
 //sockets started
 socket.on('channels-list', (payload) => {
 	store.commit('setChannelsList', payload)

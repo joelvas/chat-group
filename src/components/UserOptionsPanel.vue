@@ -8,6 +8,7 @@ const store = useStore()
 const style = useCssModule()
 const emit = defineEmits(['closeOptions'])
 const userImg = computed(() => store.state.user.img)
+const defaultProfileImg = computed(() => store.state.defaultProfileImg)
 document.addEventListener('click', (event) => {
 	if (
 		event.target.id !== 'userOptions' &&
@@ -22,11 +23,9 @@ document.addEventListener('click', (event) => {
 	<div :class="style.userOptionsPanel" id="userOptions">
 		<ul :class="style.userOptionsList">
 			<li @click="router.push({ name: 'profile' })">
-				<span class="material-icons" v-if="!userImg">account_circle</span>
 				<img
 					:class="style.userImg"
-					:src="userImg"
-					v-if="userImg"
+					:src="userImg ? userImg : defaultProfileImg"
 					alt="user_img"
 				/>
 				<span :class="style.userProfile">My profile</span>

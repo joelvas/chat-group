@@ -8,12 +8,12 @@ const store = useStore()
 const expandOptions = ref(false)
 const userName = computed(() => store.state.user.name)
 const userImg = computed(() => store.state.user.img)
+const defaultProfileImg = computed(() => store.state.defaultProfileImg)
 </script>
 
 <template>
 	<footer :class="style.footer">
-		<span class="material-icons" v-if="!userImg"> account_circle </span>
-		<img :src="userImg" v-if="userImg" alt="user_img" />
+		<img :src="userImg ? userImg : defaultProfileImg" alt="user_img" />
 		<span :class="style.userName">{{ userName }}</span>
 		<user-options-panel
 			v-if="expandOptions"

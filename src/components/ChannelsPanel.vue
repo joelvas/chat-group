@@ -17,14 +17,17 @@ const handleGoChannel = (channel) => {
 	store.commit('setCurrentMessages', [])
 	store.commit('setCurrentChannel', channel)
 }
-const getAbrev = (name) => {
-	const abrev = name
-		.toUpperCase()
-		.split(' ')
-		.slice(0, 2)
-		.map((word) => word.substring(0, 1))
-		.join('')
-	return abrev
+
+const getRandomProfileImg = (name) => {
+	const arrName = name.split(' ')
+	const defaultImg =
+		arrName.length < 2 ? arrName[0] : arrName[0] + '+' + arrName[1]
+	return 'https://ui-avatars.com/api/?background=random&name=' + defaultImg
+}
+const onChangeSearchInput = (e) => {
+	socket.emit('search-channel', e.target.value, (payload) => {
+		store.commit('setChannelsList', payload)
+	})
 }
 </script>
 
@@ -32,7 +35,7 @@ const getAbrev = (name) => {
 	<div :class="style.channelsPanel">
 		<div :class="style.searchInput">
 			<span class="material-icons">search</span>
-			<input type="text" placeholder="Search" />
+			<input type="text" placeholder="Search" @input="onChangeSearchInput" />
 		</div>
 		<ul :class="style.channelsList">
 			<li
@@ -40,7 +43,7 @@ const getAbrev = (name) => {
 				:key="i"
 				@click="handleGoChannel(channel)"
 			>
-				<span>{{ getAbrev(channel.name) }}</span>
+				<img :src="getRandomProfileImg(channel.name)" :alt="channel.name" />
 				<span>{{ channel.name.toUpperCase() }}</span>
 			</li>
 		</ul>
@@ -108,11 +111,9 @@ const getAbrev = (name) => {
 	align-items: center;
 	gap: 0.5rem;
 }
-.channelsList li span:nth-child(1) {
-	width: 1.5rem;
-	height: 1.5rem;
+.channelsList li img:nth-child(1) {
+	width: 2rem;
 	background: var(--primary-bg-color);
-	padding: 0.3rem;
 	display: flex;
 	border-radius: 10px;
 	justify-content: center;

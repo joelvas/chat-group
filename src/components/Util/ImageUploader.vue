@@ -1,16 +1,33 @@
 <script setup>
-import { ref, useCssModule } from 'vue'
+import { onMounted, ref, useCssModule } from 'vue'
 const style = useCssModule()
+const emit = defineEmits(['handleImage'])
+const img = ref()
+const props = defineProps(['profileImage'])
+
+onMounted(() => {
+	if (props.profileImage) {
+		document.querySelector(
+			'#imagePreview'
+		).style.backgroundImage = `url('${props.profileImage}')`
+	}
+})
+
 const onSelectFile = (event) => {
-	toggle.value = false
-	const files = event.target.files
-	emit('handleImage', files[0])
+	const reader = new FileReader()
+	reader.onload = () => {
+		document.querySelector(
+			'#imagePreview'
+		).style.backgroundImage = `url('${reader.result}')`
+	}
+	reader.readAsDataURL(event.target.files[0])
+	emit('handleImage', event.target.files[0])
 }
 </script>
 
 <template>
 	<div :class="style.container">
-		<label>
+		<label id="imagePreview">
 			<span class="material-icons">photo_camera</span>
 			<input type="file" @change="onSelectFile" />
 		</label>
@@ -28,10 +45,6 @@ const onSelectFile = (event) => {
 	justify-content: space-between;
 	margin: 1rem 1rem 0.5rem 1rem;
 }
-.container:hover {
-	background: rgba(128, 128, 128, 0.11);
-	border-radius: 10px;
-}
 .container label {
 	cursor: pointer;
 }
@@ -39,13 +52,14 @@ const onSelectFile = (event) => {
 	display: none;
 }
 .container label:nth-child(1) {
-	width: 3.5rem;
-	height: 3.5rem;
+	width: 4rem;
+	height: 4rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 10px;
-	background-image: url('https://res.cloudinary.com/jsonvas/image/upload/v1651456565/utils/blank-profile-picture-973460__340_u8n7kk.webp');
+	background-color: #efece8;
+	background-image: url('https://res.cloudinary.com/jsonvas/image/upload/v1651526837/chat-group/qs1uwwdffi3wgmrhrsfk_u73rns.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 }

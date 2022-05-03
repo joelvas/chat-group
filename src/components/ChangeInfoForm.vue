@@ -7,9 +7,11 @@ const style = useCssModule()
 const store = useStore()
 const emit = defineEmits(['updateInfo'])
 const profile = computed(() => store.state.user)
-let image = new FormData()
-const handleImage = () => {
-	image.append()
+const defaultProfileImg = computed(() => store.state.defaultProfileImg)
+
+let formData = new FormData()
+const handleImage = (img) => {
+	formData.append('image', img)
 }
 const handleForm = (event) => {
 	const { name, bio, phone } = event.target.elements
@@ -21,8 +23,10 @@ const handleForm = (event) => {
 	const errors = validateFields(data)
 	if (errors.length > 0) console.log(JSON.stringify(errors))
 	else {
-		emit('updateInfo', data)
-		emit('updateImage', image)
+		formData.append('name', data.name)
+		formData.append('bio', data.bio)
+		formData.append('phone', data.phone)
+		emit('updateInfo', formData)
 	}
 }
 const validateFields = (data) => {
@@ -41,7 +45,10 @@ const validateFields = (data) => {
 	>
 		<span>Change Info</span>
 		<span>Changes will be reflected to every services</span>
-		<image-uploader @handleImage="handleImage" />
+		<image-uploader
+			@handleImage="handleImage"
+			:profile-image="profile.img ? profile.img : defaultProfileImg"
+		/>
 		<label>
 			Name
 			<input

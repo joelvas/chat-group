@@ -38,6 +38,10 @@ router.beforeEach((to, from, next) => {
     const nowDate = new Date()
     if (expDate - nowDate > 0) {
       store.commit('setCredentials', { user, token })
+      if (!user.img) {
+        const defaultImage = 'https://ui-avatars.com/api/?background=random&name=' + user.name.split(' ')[0]
+        store.commit('setDefaultProfileImg', defaultImage)
+      }
     } else {
       store.dispatch('logout')
     }

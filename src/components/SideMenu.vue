@@ -18,12 +18,8 @@ const channelsPanel = ref(true)
 const expandOptions = ref(false)
 const newChannel = ref(false)
 
-const hasChannels = computed(() => {
-	return store.state.channelsList.length > 0 ? true : false
-})
-const hasMembers = computed(() => {
-	return store.state.currentMembers.length > 0 ? true : false
-})
+const isLoadingChannels = computed(() => store.state.isLoadingChannels)
+const isLoadingMembers = computed(() => store.state.isLoadingMembers)
 </script>
 
 <template>
@@ -58,14 +54,17 @@ const hasMembers = computed(() => {
 			<new-channel @closeModal="newChannel = false" />
 		</modal-dialog>
 		<spinner-loader
-			v-if="(!hasChannels && channelsPanel) || (!hasMembers && !channelsPanel)"
+			v-if="
+				(isLoadingChannels && channelsPanel) ||
+				(isLoadingMembers && !channelsPanel)
+			"
 		/>
 		<channels-panel
-			v-if="channelsPanel && hasChannels"
+			v-if="channelsPanel && !isLoadingChannels"
 			key="channels"
 			@goToMembers="channelsPanel = false"
 		/>
-		<members-panel v-if="!channelsPanel && hasMembers" key="members" />
+		<members-panel v-if="!channelsPanel && !isLoadingMembers" key="members" />
 		<side-menu-footer />
 	</aside>
 </template>
@@ -76,8 +75,8 @@ const hasMembers = computed(() => {
 	height: calc(100vh);
 	display: flex;
 	flex-flow: column;
-  position: relative;
-  z-index: 1;
+	position: relative;
+	z-index: 1;
 }
 .channelsNavbar {
 	display: flex;

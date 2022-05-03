@@ -13,9 +13,11 @@ const style = useCssModule()
 const store = useStore()
 const profileInfo = ref(true)
 const headers = {
+	'Content-Type': 'multipart/form-data',
 	'x-token': store.state.token,
 }
 const updateInfo = async (data) => {
+	console.log('updating to...', data)
 	const res = await axios
 		.put(store.state.baseUrl + '/api/users/' + store.state.user._id, data, {
 			headers,
@@ -24,12 +26,10 @@ const updateInfo = async (data) => {
 			if (err.response) console.log(err.response.data)
 		})
 	if (res && res.status === 200) {
+		console.log('updated!')
 		store.dispatch('updateUser', res.data)
 		profileInfo.value = true
 	}
-}
-const updateImage = async (image) => {
-  
 }
 </script>
 <template>
