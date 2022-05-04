@@ -48,6 +48,8 @@ const store = createStore({
     },
     setCurrentChannel(state, channel) {
       state.currentChannel = channel
+    },
+    setLoadingMembers(state) {
       state.isLoadingMembers = true
     },
     setChannelsList(state, channels) {
@@ -74,8 +76,26 @@ const store = createStore({
       state.currentMessages.unshift(message)
     },
     removeChannel(state, channel) {
-      state.channelsList = [...state.channelsList].filter(ch => ch.id !== channel.id)
+      state.channelsList = [...state.channelsList].filter(ch => ch._id !== channel._id)
     },
+    setDefaultMessages(state) {
+      state.currentMessages = [
+        {
+          _id: 0,
+          text: 'Join a current channel or start one',
+          created_at: String(Date.now()),
+          user: {
+            name: 'Browser',
+          },
+        },
+      ]
+    },
+    setDefaultChannel(state) {
+      state.currentChannel = {
+        _id: 0,
+        name: 'Chat Group',
+      }
+    }
   },
   actions: {
     async registerWithLocal({ commit, state }, payload) {

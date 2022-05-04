@@ -50,9 +50,13 @@ const isLoadingMembers = computed(() => store.state.isLoadingMembers)
 				close
 			</span>
 		</nav>
-		<modal-dialog :new-channel="newChannel" @closeModal="newChannel = false">
-			<new-channel @closeModal="newChannel = false" />
+		<modal-dialog :modal="newChannel" @closeModal="newChannel = false">
+			<new-channel
+				@closeModal="newChannel = false"
+				@goToMembers="channelsPanel = false"
+			/>
 		</modal-dialog>
+
 		<spinner-loader
 			v-if="
 				(isLoadingChannels && channelsPanel) ||
@@ -64,7 +68,11 @@ const isLoadingMembers = computed(() => store.state.isLoadingMembers)
 			key="channels"
 			@goToMembers="channelsPanel = false"
 		/>
-		<members-panel v-if="!channelsPanel && !isLoadingMembers" key="members" />
+		<members-panel
+			v-if="!channelsPanel && !isLoadingMembers"
+			key="members"
+			@closePanel="channelsPanel = true"
+		/>
 		<side-menu-footer />
 	</aside>
 </template>
@@ -74,6 +82,7 @@ const isLoadingMembers = computed(() => store.state.isLoadingMembers)
 	background: var(--secondary-bg-color);
 	height: calc(100vh);
 	display: flex;
+	max-width: calc(100% - 3rem);
 	flex-flow: column;
 	position: relative;
 	z-index: 1;

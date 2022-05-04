@@ -27,7 +27,11 @@ socket.on('current-members', (payload) => {
 	store.commit('setCurrentMembers', payload)
 })
 socket.on('current-messages', (payload) => {
-	store.commit('setCurrentMessages', payload)
+	if (payload.length == 0) {
+		store.commit('setDefaultMessages')
+	} else {
+		store.commit('setCurrentMessages', payload)
+	}
 })
 
 //sockets updates
@@ -42,6 +46,20 @@ socket.on('remove-member', (payload) => {
 })
 socket.on('new-message', (payload) => {
 	store.commit('addMessage', payload)
+})
+socket.on('remove-channel', (payload) => {
+	const newList = [...store.state.channelsList].filter(
+		(ch) => ch._id !== payload._id
+	)
+	store.commit('setChannelsList', newList)
+})
+socket.on('channel-updated', (payload) => {
+	const channelsUpdated = [...store.state.channelsList].map((ch) =>
+		ch._id === payload._id ? payload : ch
+	)
+	store.commit('setChannelsList', channelsUpdated)
+	if (store.state.currentChannel._id === payload._id)
+		store.commit('setCurrentChannel', payload)
 })
 
 socket.on('connect', () => {

@@ -86,7 +86,7 @@ const validateFields = (data) => {
 	display: flex;
 	flex-flow: column;
 	margin: 0.5rem;
-	padding: 1.5rem 0.5rem;
+	padding: 1.5rem 0rem;
 }
 .changeInfoForm > span {
 	text-align: left;

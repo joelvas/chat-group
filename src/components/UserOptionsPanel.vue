@@ -77,6 +77,8 @@ document.addEventListener('click', (event) => {
 }
 .userImg {
 	width: 1.2rem;
+	height: 1.2rem;
+  object-fit: cover;
 	border-radius: 50%;
 }
 .userProfile {

@@ -90,6 +90,8 @@ const handleEditButton = () => {
 
 .profileImage {
 	width: 2.5rem;
+	height: 2.5rem;
+  object-fit: cover;
 }
 
 .profileEdit > div:nth-child(1) {

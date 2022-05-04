@@ -36,7 +36,6 @@ onUpdated(() => {
 			<img
 				:src="msg.user.img ? msg.user.img : getRandomProfileImg(msg.user.name)"
 				:class="style.msgImage"
-				width="20"
 				alt="user_img"
 			/>
 			<div :class="style.msgContent">
@@ -90,6 +89,8 @@ onUpdated(() => {
 }
 .msgImage {
 	width: 2.1rem;
+  height: 2.1rem;
+  object-fit: cover;
 	padding: 0.2rem;
 	border-radius: 50%;
 }
@@ -101,6 +102,8 @@ onUpdated(() => {
 }
 .msgContent > span {
 	text-align: left;
+  max-width: 100%;
+  word-break: break-all;
 }
 .msgInfo {
 	color: var(--secondary-text-color);

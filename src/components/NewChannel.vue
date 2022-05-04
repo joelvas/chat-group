@@ -5,7 +5,7 @@ import { useStore } from 'vuex'
 const style = useCssModule()
 const store = useStore()
 const socket = inject('socket')
-const emit = defineEmits(['closeModal'])
+const emit = defineEmits(['closeModal', 'goToMembers'])
 
 const name = ref('')
 const description = ref('')
@@ -16,15 +16,15 @@ const handleNewRoom = () => {
 		console.log(JSON.stringify(errors))
 		return false
 	}
-	store.commit('setCurrentMembers', [])
-	store.commit('setCurrentMessages', [])
 
 	const channel = { name: name.value, description: description.value }
 	socket.emit('create-channel', channel, (payload) => {
-		socket.emit('join-channel', payload)
 		store.commit('setCurrentChannel', payload)
+		store.commit('setCurrentMembers', [store.state.user])
+		store.commit('setDefaultMessages')
 		name.value = ''
 		description.value = ''
+		emit('goToMembers')
 		emit('closeModal')
 	})
 }

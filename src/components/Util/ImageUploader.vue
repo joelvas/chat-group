@@ -58,10 +58,8 @@ const onSelectFile = (event) => {
 	justify-content: center;
 	align-items: center;
 	border-radius: 10px;
-	background-color: #efece8;
-	background-image: url('https://res.cloudinary.com/jsonvas/image/upload/v1651526837/chat-group/qs1uwwdffi3wgmrhrsfk_u73rns.png');
+	background-color: inherit;
 	background-size: cover;
-	background-repeat: no-repeat;
 }
 .container label:nth-child(1) span {
 	font-size: 1.2rem;

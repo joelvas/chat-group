@@ -50,6 +50,8 @@ const defaultProfileImg = computed(() => store.state.defaultProfileImg)
 }
 .footer > img {
 	width: 1.4rem;
+	height: 1.4rem;
+  object-fit: cover;
 	border-radius: 50%;
 }
 .optionsButton {

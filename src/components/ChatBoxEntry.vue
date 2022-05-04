@@ -22,7 +22,9 @@ const handleMessage = () => {
 			@keyup.enter="handleMessage"
 			v-model="text"
 		/>
-		<span class="material-icons" @click="handleMessage">send</span>
+		<span v-if="text !== ''" class="material-icons" @click="handleMessage"
+			>send</span
+		>
 	</div>
 </template>
 
@@ -39,7 +41,8 @@ const handleMessage = () => {
 	background: inherit;
 	flex-grow: 1;
 	border: none;
-	font-size: 0.9rem;
+	padding: 0.3rem 0.4rem;
+	font-size: .9rem;
 	outline: none;
 	color: var(--secondary-text-color);
 }
