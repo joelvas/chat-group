@@ -110,7 +110,7 @@ const store = createStore({
         commit('setCredentials', res.data)
         localStorage.setItem('token', JSON.stringify(res.data.token))
         localStorage.setItem('user', JSON.stringify(res.data.user))
-        router.push({ name: 'home' })
+        window.location.reload()
       }
     },
     async loginWithLocal({ commit, state }, payload) {
@@ -125,7 +125,7 @@ const store = createStore({
         commit('setCredentials', res.data)
         localStorage.setItem('token', JSON.stringify(res.data.token))
         localStorage.setItem('user', JSON.stringify(res.data.user))
-        router.push({ name: 'home' })
+        window.location.reload()
       }
     },
     async loginWithGoogle({ commit, state }, payload) {
@@ -140,14 +140,14 @@ const store = createStore({
         commit('setCredentials', res.data)
         localStorage.setItem('token', JSON.stringify(res.data.token))
         localStorage.setItem('user', JSON.stringify(res.data.user))
-        router.push({ name: 'home' })
+        window.location.reload()
       }
     },
     async logout({ commit }) {
       commit('removeCredentials')
       localStorage.removeItem('token')
       localStorage.removeItem('user')
-      router.push({ name: 'login' })
+      window.location.reload()
     },
     async updateUser({ commit }, payload) {
       commit('setUser', payload)

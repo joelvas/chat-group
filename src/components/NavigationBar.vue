@@ -7,21 +7,6 @@ const style = useCssModule()
 const router = useRouter()
 const store = useStore()
 const returnChat = () => {
-	store.commit('setCurrentChannel', {
-		_id: 0,
-		name: 'Chat Group',
-	})
-	store.commit('setCurrentMembers', [])
-	store.commit('setCurrentMessages', [
-		{
-			_id: 0,
-			text: 'Join a current channel or start one',
-			created_at: String(Date.now()),
-			user: {
-				name: 'Browser',
-			},
-		},
-	])
 	router.push({ name: 'home' })
 }
 </script>
