@@ -16,8 +16,13 @@ const handleConfirmPassword = () => {
 
 <template>
 	<div :class="style.confirmPassword">
-		<span>CONFIRM PASSWORD</span>
-		<input type="text" v-model="password" placeholder="Enter password" />
+		<span>PRIVATE CHANNEL</span>
+		<input
+			type="text"
+			v-model="password"
+			@keyup.enter="handleConfirmPassword"
+			placeholder="Enter password"
+		/>
 		<div>
 			<button type="button" @click="handleConfirmPassword">Confirm</button>
 		</div>

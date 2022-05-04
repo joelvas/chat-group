@@ -15,7 +15,7 @@ const channelSelected = ref({})
 const confirmPassword = ref(false)
 const currentChannel = computed(() => store.state.currentChannel)
 const handleGoChannel = (channel) => {
-	if (channel._id === currentChannel._id) {
+	if (channel._id === currentChannel.value._id) {
 		emit('goToMembers')
 		return false
 	} else {
@@ -42,8 +42,11 @@ const handleGoChannel = (channel) => {
 }
 const openConfirmPassword = (channel) => {
 	channelSelected.value = channel
-	if (channel.private) confirmPassword.value = true
-	else handleGoChannel(channel)
+	if (channel.private && channel._id !== currentChannel.value._id) {
+		confirmPassword.value = true
+	} else {
+		handleGoChannel(channel)
+	}
 }
 const setPassword = (pass) => {
 	password.value = pass
