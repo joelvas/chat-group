@@ -10,8 +10,8 @@ const gAuthOptions = {
   clientId: '138302178510-s9r8h4af5m243j7a0pj1thf36tjaj9qf.apps.googleusercontent.com',
   scope: 'email', prompt: 'consent', fetch_basic_profile: true
 }
-app.provide('gAuth', app.config.globalProperties.$gAuth)
 app.use(GAuth, gAuthOptions)
+app.provide('gAuth', app.config.globalProperties.$gAuth)
 
 app.use(router)
 app.use(store)
