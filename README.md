@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# ChatGroup
+ChatGroup allows you to join and chat with people in groups with their own topic. This webapp has been developed with vue.js and and socket.io. You can try here: [https://chat-group.netlify.app](https://chat-group.netlify.app)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Project setup
+```
+npm install
+```
 
-## Recommended IDE Setup
+### Compiles and hot-reloads for development
+```
+npm run dev
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+### Compiles and minifies for production
+```
+npm run build
+```
